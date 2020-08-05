@@ -10,7 +10,7 @@ const sauceSchema = mongoose.Schema({
   userId: { type: String, required: true }, //identifiant unique MongoDB pour l'utilisateur qui a créé la sauce
   likes: { type: Number, default: 0}, // nombre d'utilisateurs qui aiment la sauce
   dislikes: { type: Number, default: 0}, // nombre d'utilisateurs qui n'aiment pas la sauce
-  userLiked: [{ type: String }], // tableau d'identifiants d'utilisateurs ayant aimé la sauce
+  usersLiked: [{ type: String }], // tableau d'identifiants d'utilisateurs ayant aimé la sauce
   usersDisliked: [{ type: String }], // tableau d'identifiants d'utilisateurs n'ont pas aimé la sauce
 });
 

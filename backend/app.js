@@ -21,8 +21,7 @@ app.use((req, res, next) => {
     next();
   });
 
-app.use(bodyParser.json());
-
+app.use(bodyParser.json()); // Transforme le corps de la requête en objet JSON - Les données sont ainsi contenues dans req.body.methodeDelAPI
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
