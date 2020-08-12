@@ -41,10 +41,9 @@ exports.addLike = (req, res, next) => {
 
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
-    // console.log(sauceObject);
     delete sauceObject._id;
     const sauce = new Sauce({
-      ...sauceObject, // Récupération du corps de sauce dans la requête et on l'affece au nouvel objet Sauce
+      ...sauceObject, // Récupération du corps de sauce dans la requête et on l'affecte au nouvel objet Sauce
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
     sauce.save()
@@ -53,11 +52,17 @@ exports.createSauce = (req, res, next) => {
   };
 
   exports.modifySauce = (req, res, next) => {
-    const sauceObject = req.file ?
-      {
-        ...JSON.parse(req.body.sauce),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` // ***
-      } : { ...req.body };
+      let sauceObject;
+      if (req.file){
+        sauceObject = {
+          ...JSON.parse(req.body.sauce),
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        }
+    }
+    else{
+      sauceObject = {...req.body}
+    }
+
     Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
       .then(() => res.status(200).json({ message: 'Sauce modifiée !'}))
       .catch(error => res.status(400).json({ error }));
