@@ -7,9 +7,7 @@ exports.addLike = (req, res, next) => {
       console.log(sauce);
       console.log(req.body);
 
-      usersLiked = sauce.usersLiked; // Récupére le champ usersLiked dans la BDD qui va donner un array
-      usersDisliked = sauce.usersDisliked;
-      userId = req.body.userId; // On récupère l'UserId de la personne qui a cliqué sur j'aime
+      const userId = req.body.userId; // On récupère l'UserId de la personne qui a cliqué sur j'aime
 
       switch (req.body.like) {
         case 1 : // L'utilisateur aime la sauce
@@ -30,6 +28,8 @@ exports.addLike = (req, res, next) => {
             sauce.dislikes++; // Récupérer la valeur du champ dislikes et on retire 1
             sauce.usersDisliked.push(userId); // On l'ajoute au tableau des users qui n'aiment pas la sauce.
         break;
+        default:
+            throw 'Invalid like';
       }
       sauce.save() // On sauvegarde la sauce modifiée dans la base de données 
       .then(() => res.status(201).json({ message: 'Choix enregistré !'}))
